@@ -6,12 +6,12 @@ import (
 
 type Stream struct {
 	ID           uuid.UUID
-	Streamer     Streamer
+	Streamer     *Streamer
 	ViewersCount int
 }
 
-func NewStream(streamer Streamer) Stream {
-	return Stream{
+func NewStream(streamer *Streamer) *Stream {
+	return &Stream{
 		ID:       uuid.New(),
 		Streamer: streamer,
 	}

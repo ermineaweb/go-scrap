@@ -2,7 +2,7 @@ package inmemory
 
 import (
 	"errors"
-	"go-scrap/domain/entity"
+	"go-twitch/domain/entity"
 
 	"github.com/google/uuid"
 )

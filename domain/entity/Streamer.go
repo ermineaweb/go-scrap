@@ -8,8 +8,8 @@ type Streamer struct {
 	Image string
 }
 
-func NewStreamer(name string) Streamer {
-	return Streamer{
+func NewStreamer(name string) *Streamer {
+	return &Streamer{
 		ID:   uuid.New(),
 		Name: name,
 	}

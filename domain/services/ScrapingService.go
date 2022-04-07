@@ -2,8 +2,8 @@ package services
 
 import (
 	"fmt"
-	"go-scrap/domain/entity"
-	"go-scrap/domain/repository"
+	"go-twitch/domain/entity"
+	"go-twitch/domain/repository"
 )
 
 type ScrapingService struct {
