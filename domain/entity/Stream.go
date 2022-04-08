@@ -7,6 +7,7 @@ import (
 type Stream struct {
 	ID           uuid.UUID
 	Streamer     *Streamer
+	Chat         *Chat
 	ViewersCount int
 }
 
@@ -14,5 +15,6 @@ func NewStream(streamer *Streamer) *Stream {
 	return &Stream{
 		ID:       uuid.New(),
 		Streamer: streamer,
+		Chat:     NewChat(streamer),
 	}
 }

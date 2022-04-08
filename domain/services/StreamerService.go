@@ -9,8 +9,8 @@ type StreamerService struct {
 	repository repository.Streamer
 }
 
-func NewStreamerService(repository repository.Streamer) StreamerService {
-	return StreamerService{repository: repository}
+func NewStreamerService(repository repository.Streamer) *StreamerService {
+	return &StreamerService{repository: repository}
 }
 
 func (s StreamerService) GetAll() []entity.Streamer {

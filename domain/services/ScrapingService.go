@@ -16,13 +16,13 @@ func NewScrapingService(streamRepo repository.Stream, streamerRepo repository.St
 	return ScrapingService{streamRepo, streamerRepo}
 }
 
-func (s *ScrapingService) ScrapAll(stream entity.Stream) {
+func (s *ScrapingService) ScrapAll(stream *entity.Stream) {
 	streamers := NewStreamerService(s.streamerRepo).GetAll()
 	for _, streamer := range streamers {
-		s.Scrap(streamer)
+		s.Scrap(&streamer)
 	}
 }
 
-func (s *ScrapingService) Scrap(streamer entity.Streamer) {
+func (s *ScrapingService) Scrap(streamer *entity.Streamer) {
 	fmt.Println(streamer.Name)
 }
