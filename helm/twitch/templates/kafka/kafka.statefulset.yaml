@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: twitch
+  name: kafka
+spec:
+  serviceName: "kafka"
+  replicas: 1
+  selector:
+    matchLabels:
+      component: kafka
+  template:
+    metadata:
+      labels:
+        component: kafka
+    spec:
+      containers:
+      - image: bitnami/kafka:latest
+        name: kafka
+        ports:
+          - name: main
+            containerPort: 9092
+        envFrom:
+          - configMapRef:
+              name: env-kafka
+        resources: {}

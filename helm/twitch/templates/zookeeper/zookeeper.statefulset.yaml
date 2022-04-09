@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: twitch
+  name: zookeeper
+spec:
+  serviceName: "zookeeper"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: twitch
+      component: zookeeper
+  template:
+    metadata:
+      labels:
+        app: twitch
+        component: zookeeper
+    spec:
+      containers:
+      - image: bitnami/zookeeper:latest
+        name: zookeeper
+        ports:
+          - name: main
+            containerPort: 2181
+        envFrom:
+          - configMapRef:
+              name: env-zookeeper
+        resources: {}

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: twitch
+    service: streamnotifier
+  name: streamnotifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: twitch
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: twitch
+    spec:
+      containers:
+      - image: ermineaweb/stream-notifier:latest
+        name: streamnotifier
+        resources: {}
+status: {}

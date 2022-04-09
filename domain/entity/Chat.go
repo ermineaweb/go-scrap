@@ -5,7 +5,7 @@ type Chat struct {
 	NbMessageOverStart int
 	NbMessageOverTime  int
 	Buffer             int
-	Speed              float32
+	MsgPerMin          int
 }
 
 func NewChat(streamer *Streamer) *Chat {

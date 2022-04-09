@@ -3,16 +3,34 @@ package entity
 type Chats []*Chat
 
 // return a new list of chats with optionals streamers
-func NewChats(streamers ...*Streamer) Chats {
-	var chats Chats
-	for _, streamer := range streamers {
-		chats = append(chats, NewChat(streamer))
-	}
-	return chats
+func NewChats() Chats {
+	return Chats{}
 }
 
 func (c Chats) AddStreamer(name string) Chats {
+	streamer := NewStreamer(name)
+	if c.contains(streamer) {
+		return c
+	}
 	return append(c, NewChat(NewStreamer(name)))
+}
+
+func (c Chats) RemoveStreamer(name string) Chats {
+	for k, s := range c {
+		if s.Streamer.Name == name {
+			return append(c[:k], c[k+1:]...)
+		}
+	}
+	return c
+}
+
+func (c Chats) contains(streamer *Streamer) bool {
+	for _, chat := range c {
+		if chat.Streamer.Name == streamer.Name {
+			return true
+		}
+	}
+	return false
 }
 
 // update the total message since the start of the scrap
@@ -33,14 +51,14 @@ func (c Chats) IncreaseMessagesOverTime() {
 	}
 }
 
-// update the speed of messages, in messages/second
+// update the speed of messages, in messages/min
 func (c Chats) UpdateSpeed(duration int) {
 	for _, chat := range c {
-		chat.Speed = float32(chat.NbMessageOverTime) / float32(duration)
+		chat.MsgPerMin = chat.NbMessageOverTime * 60 / duration
 	}
 }
 
 // implement interface sortable
 func (c Chats) Len() int           { return len(c) }
-func (c Chats) Less(i, j int) bool { return c[i].Speed > c[j].Speed }
+func (c Chats) Less(i, j int) bool { return c[i].MsgPerMin > c[j].MsgPerMin }
 func (c Chats) Swap(i, j int)      { c[i], c[j] = c[j], c[i] }
