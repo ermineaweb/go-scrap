@@ -1,9 +1,16 @@
 #!/bin/bash
 
-SERVICE_NAME="chat-speedometer"
-docker build --build-arg SERVICE_NAME=${SERVICE_NAME} -t ermineaweb/${SERVICE_NAME}:latest .
-docker push ermineaweb/${SERVICE_NAME}:latest
+SERVICES_NAME=(
+    "speedometer"
+    "stream-notifier"
+    "server-rest"
+)
 
-SERVICE_NAME="stream-notifier"
-docker build --build-arg SERVICE_NAME=${SERVICE_NAME} -t ermineaweb/${SERVICE_NAME}:latest .
-docker push ermineaweb/${SERVICE_NAME}:latest
+for SERVICE_NAME in "${SERVICES_NAME[@]}"
+do
+    docker build \
+    --build-arg SERVICE_NAME="${SERVICE_NAME}" \
+    -t ermineaweb/"${SERVICE_NAME}":latest .
+
+    docker push ermineaweb/"${SERVICE_NAME}":latest
+done

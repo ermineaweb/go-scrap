@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: twitch
+    service: serverrest
+  name: serverrest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: twitch
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: twitch
+    spec:
+      initContainers:
+      - name: wait-for-zookeeper
+        image: jwilder/dockerize
+        args: ["-wait", "tcp://kafka:9092", "-timeout", "10s"]
+      containers:
+      - image: ermineaweb/server:latest
+        name: serverrest
+        ports:
+          - name: main
+            containerPort: 3000
+        resources: {}
+status: {}

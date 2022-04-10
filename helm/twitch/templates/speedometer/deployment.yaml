@@ -3,8 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: twitch
-    service: streamnotifier
-  name: streamnotifier
+  name: speedometer
 spec:
   replicas: 1
   selector:
@@ -16,8 +15,12 @@ spec:
       labels:
         app: twitch
     spec:
+      initContainers:
+      - name: wait-for-zookeeper
+        image: jwilder/dockerize
+        args: ["-wait", "tcp://kafka:9092", "-timeout", "10s"]
       containers:
-      - image: ermineaweb/stream-notifier:latest
-        name: streamnotifier
+      - image: ermineaweb/chat-speedometer:latest
+        name: speedometer
         resources: {}
 status: {}

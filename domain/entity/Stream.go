@@ -5,10 +5,10 @@ import (
 )
 
 type Stream struct {
-	ID           uuid.UUID
-	Streamer     *Streamer
-	Chat         *Chat
-	ViewersCount int
+	ID           uuid.UUID `json:"id"`
+	Streamer     *Streamer `json:"streamer"`
+	Chat         *Chat     `json:"chat"`
+	ViewersCount int       `json:"viewers_count"`
 }
 
 func NewStream(streamer *Streamer) *Stream {

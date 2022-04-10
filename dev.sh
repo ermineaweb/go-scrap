@@ -1,5 +1,5 @@
 #!/bin/bash
 
-helm uninstall twitch
 ./build.sh
-helm install twitch ./helm/twitch
+helm upgrade twitch ./helm/twitch --force
+watch kubectl get pods 

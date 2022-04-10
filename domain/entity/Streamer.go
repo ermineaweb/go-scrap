@@ -3,9 +3,9 @@ package entity
 import "github.com/google/uuid"
 
 type Streamer struct {
-	ID    uuid.UUID
-	Name  string
-	Image string
+	ID    uuid.UUID `json:"id"`
+	Name  string    `json:"name"`
+	Image string    `json:"image"`
 }
 
 func NewStreamer(name string) *Streamer {
