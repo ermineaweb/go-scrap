@@ -11,7 +11,7 @@ import (
 	"github.com/gempir/go-twitch-irc/v3"
 )
 
-var MEASURE_INTERVAL = 5
+var MEASURE_INTERVAL = 10
 
 func main() {
 	startKafkaConsumer := kafka.NewKafkaConsumer("kafka:9092", "stream_start")

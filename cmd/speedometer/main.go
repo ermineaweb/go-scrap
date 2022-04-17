@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"go-twitch/domain/services"
 	"go-twitch/infra/kafka"
+	"sort"
+	"time"
 
 	"github.com/gempir/go-twitch-irc/v3"
 )
@@ -19,5 +22,20 @@ func main() {
 		stopKafkaConsumer,
 		MEASURE_INTERVAL,
 	)
-	speedometerService.Run()
+	go speedometerService.Run()
+
+	refreshDisplay := time.NewTicker(1 * time.Second)
+	defer refreshDisplay.Stop()
+
+	for range refreshDisplay.C {
+		fmt.Print("\033[H\033[2J")
+		sort.Sort(speedometerService.Chats)
+		for _, chat := range speedometerService.Chats {
+			fmt.Printf("%s\ntotal:\t%d\nspeed:\t%d msg/min\n\n",
+				chat.Streamer.Name,
+				chat.NbMessageOverStart,
+				chat.MsgPerMin,
+			)
+		}
+	}
 }

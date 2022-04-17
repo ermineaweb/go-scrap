@@ -16,10 +16,10 @@ spec:
       labels:
         component: kafka
     spec:
-      # initContainers:
-      # - name: wait-for-zookeeper
-      #   image: jwilder/dockerize
-      #   args: ["-wait", "tcp://zookeeper:2181", "-timeout", "10s"]
+      initContainers:
+      - name: wait-for-zookeeper
+        image: jwilder/dockerize
+        args: ["-wait", "tcp://zookeeper:2181", "-timeout", "10s"]
       containers:
       - image: bitnami/kafka:latest
         name: kafka

@@ -12,7 +12,7 @@ func NewChats() Chats {
 	return Chats{}
 }
 
-func (c *Chats) EncodeToJSON(w io.Writer) {
+func (c Chats) EncodeToJSON(w io.Writer) {
 	json.NewEncoder(w).Encode(&c)
 }
 

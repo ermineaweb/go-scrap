@@ -15,12 +15,12 @@ spec:
       labels:
         component: speedometer
     spec:
-      # initContainers:
-      # - name: wait-for-zookeeper
-      #   image: jwilder/dockerize
-      #   args: ["-wait", "tcp://kafka:9092", "-timeout", "10s"]
+      initContainers:
+      - name: wait-for-kafka
+        image: ermineaweb/speedometer:latest
+        command: ["sh", "-c", "until kcat -q -b kafka:9092 -t topic_healthcheck -L; do echo 'try again'; sleep 3; done"]
       containers:
-      - image: ermineaweb/speedometer:latest
-        name: speedometer
+      - name: speedometer
+        image: ermineaweb/speedometer:latest
         resources: {}
 status: {}

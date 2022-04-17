@@ -2,7 +2,6 @@ package main
 
 import (
 	"go-twitch/infra/kafka"
-	"time"
 )
 
 func main() {
@@ -11,12 +10,10 @@ func main() {
 	for {
 		startStreamNotifProducer.Produce([]byte("zerator"))
 		startStreamNotifProducer.Produce([]byte("otplol_"))
-		startStreamNotifProducer.Produce([]byte("thebausffs"))
-		startStreamNotifProducer.Produce([]byte("tubbo"))
 		startStreamNotifProducer.Produce([]byte("mistermv"))
 		startStreamNotifProducer.Produce([]byte("chap_gg"))
 		startStreamNotifProducer.Produce([]byte("asmongold"))
-		time.Sleep(20 * time.Second)
+		// time.Sleep(20 * time.Second)
 		// stopStreamNotifProducer.Produce([]byte("zerator"))
 		// time.Sleep(5 * time.Second)
 	}
