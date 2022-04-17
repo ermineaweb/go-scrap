@@ -27,7 +27,7 @@ func NewSpeedometerService(
 ) *SpeedometerService {
 	return &SpeedometerService{
 		twitchClient:        twitchClient,
-		Chats:               entity.NewChats(),
+		Chats:               entity.NewChats().AddStreamer("mistermv").AddStreamer("chap_gg"),
 		startStreamConsumer: startStreamConsumer,
 		stopStreamConsumer:  stopStreamConsumer,
 		measureInterval:     measureInterval,
@@ -53,9 +53,7 @@ func (s *SpeedometerService) Run() {
 				s.Chats = s.Chats.IncreaseMessagesOverStart(name)
 
 			case <-refreshUpdate.C:
-				s.Chats = s.Chats.
-					IncreaseMessagesOverTime().
-					UpdateSpeed(s.measureInterval)
+				s.Chats = s.Chats.IncreaseMessagesOverTime().UpdateSpeed(s.measureInterval)
 
 			case <-refreshDisplay.C:
 				fmt.Print("\033[H\033[2J")
@@ -81,7 +79,6 @@ func (s *SpeedometerService) Run() {
 // when notifier sends a start stream notification, the chat is appended to the list,
 // an event listener is added and messages are sended on the Speedometer's chan
 func (s *SpeedometerService) streamStartCallback(message []byte) {
-	fmt.Println("streamStartCallback")
 	s.Chats = s.Chats.AddStreamer(string(message))
 	s.twitchClient.OnPrivateMessage(func(m twitch.PrivateMessage) {
 		s.streamChannel <- m.Channel
@@ -92,7 +89,6 @@ func (s *SpeedometerService) streamStartCallback(message []byte) {
 // when notifier sends a stop stream notif, the chat is removed from
 // the list and the client is removed from the chat
 func (s *SpeedometerService) streamStopCallback(message []byte) {
-	fmt.Println("streamStopCallback")
 	s.Chats = s.Chats.RemoveStreamer(string(message))
 	s.twitchClient.Depart(string(message))
 }

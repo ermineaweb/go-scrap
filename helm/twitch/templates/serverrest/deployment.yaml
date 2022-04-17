@@ -3,25 +3,24 @@ kind: Deployment
 metadata:
   labels:
     app: twitch
-    service: serverrest
   name: serverrest
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: twitch
+      component: serverrest
   strategy: {}
   template:
     metadata:
       labels:
-        app: twitch
+        component: serverrest
     spec:
-      initContainers:
-      - name: wait-for-zookeeper
-        image: jwilder/dockerize
-        args: ["-wait", "tcp://kafka:9092", "-timeout", "10s"]
+      # initContainers:
+      # - name: wait-for-zookeeper
+      #   image: jwilder/dockerize
+      #   args: ["-wait", "tcp://kafka:9092", "-timeout", "10s"]
       containers:
-      - image: ermineaweb/server:latest
+      - image: ermineaweb/server-rest:latest
         name: serverrest
         ports:
           - name: main

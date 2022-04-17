@@ -9,12 +9,10 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: twitch
       component: zookeeper
   template:
     metadata:
       labels:
-        app: twitch
         component: zookeeper
     spec:
       containers:

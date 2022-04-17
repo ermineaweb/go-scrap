@@ -8,17 +8,17 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: twitch
+      component: streamnotifier
   strategy: {}
   template:
     metadata:
       labels:
-        app: twitch
+        component: streamnotifier
     spec:
-      initContainers:
-      - name: wait-for-zookeeper
-        image: jwilder/dockerize
-        args: ["-wait", "tcp://kafka:9092", "-timeout", "10s"]
+      # initContainers:
+      # - name: wait-for-zookeeper
+      #   image: jwilder/dockerize
+      #   args: ["-wait", "tcp://kafka:9092", "-timeout", "10s"]
       containers:
       - image: ermineaweb/stream-notifier:latest
         name: streamnotifier

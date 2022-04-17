@@ -12,12 +12,12 @@ type kafkaConsumer struct {
 	topic         string
 }
 
-func NewKafkaConsumer(brokerAddress, topic string) *kafkaConsumer {
-	return &kafkaConsumer{brokerAddress: brokerAddress, topic: topic}
+func NewKafkaConsumer(brokerAddress, topic string) kafkaConsumer {
+	return kafkaConsumer{brokerAddress: brokerAddress, topic: topic}
 }
 
 // kafka consumer receive a kafka message and execute a callback with this message
-func (k *kafkaConsumer) Consume(callback func([]byte)) {
+func (k kafkaConsumer) Consume(callback func([]byte)) {
 	ctx := context.Background()
 
 	reader := kafka.NewReader(kafka.ReaderConfig{
